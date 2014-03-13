@@ -16,30 +16,30 @@ describe 'a fixture with two users' do
     )
   end
 
-  describe 'the parsed JSON' do
-    subject(:parsed_json) { JSON.parse(fixture.to_json) }
+  describe '.as_json' do
+    subject(:payloads) { fixture.as_json }
 
     it 'contains a single user payload' do
-      expect(parsed_json).to contain_exactly(
-        ['user', an_instance_of(Hash)]
+      expect(payloads).to contain_exactly(
+        [:user, an_instance_of(Hash)]
       )
     end
 
     it 'returns the correct users in the payload' do
-      payload = parsed_json.first[1]
+      payload = payloads.first[1]
 
       expect(payload).to match({
         'user' => [
           a_hash_including(
-            'gender' => 'other',
-            'status' => 'open',
-            'mood' => 'grumpy'
+            gender: 'other',
+            status: 'open',
+            mood: 'grumpy'
           ),
 
           a_hash_including(
-            'gender' => 'other',
-            'status' => 'open',
-            'mood' => 'grumpy'
+            gender: 'other',
+            status: 'open',
+            mood: 'grumpy'
           )
         ]
       })

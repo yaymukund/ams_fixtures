@@ -72,20 +72,22 @@ class AmsFixtures::Fixture
     @records[plural_name] = records
 
     resources = serialize_object(records)
-    @payloads << [name, {name => resources}]
+    @payloads << [name, {name.to_s => resources}]
   end
 
   def write_to_file!
+    namespace = AmsFixtures.fixtures_namespace
+
     File.open(File.join(AmsFixtures.fixtures_path, "#{@name}.js"), 'w') do |f|
       f.write <<-JSOUT.strip_heredoc
-        helper.fixtures = helper.fixtures || {};
-        helper.fixtures['#{@name}'] = #{to_json};
+        #{namespace}.fixtures = #{namespace}.fixtures || {};
+        #{namespace}.fixtures['#{@name}'] = #{to_json};
       JSOUT
     end
   end
 
-  def to_json
-    @payloads.to_json
+  def as_json
+    @payloads
   end
 
   private
