@@ -29,9 +29,11 @@ RSpec.configure do |c|
     end
 
     class User < ActiveRecord::Base
+      has_one :dog
     end
 
     class Dog < ActiveRecord::Base
+      belongs_to :user
     end
 
     Fabricator(:user) do
@@ -42,6 +44,7 @@ RSpec.configure do |c|
     end
 
     Fabricator(:dog) do
+      user
       name { sequence { |i| "Fido #{i}" }}
     end
 
