@@ -50,7 +50,7 @@ require 'fabrication'
 require 'active_model_serializers'
 
 class AmsFixtures::Fixture
-  attr_reader :records
+  attr_reader :records, :name
 
   def initialize(name)
     @name = name

@@ -1,18 +1,16 @@
-require "ams_fixtures/version"
+require 'ams_fixtures/version'
 require 'ams_fixtures/fixture'
+require 'ams_fixtures/generator'
+require 'ams_fixtures/engine'
 
 module AmsFixtures
-  @configuration = {}
+  def generate(options, &block)
+   generator = Generator.new(options)
 
-  def self.configure(options)
-    @configuration.merge!(options)
-  end
+   ActiveRecord::Base.transaction do
+     generator.instance_eval(&block)
+   end
 
-  def self.fixtures_path
-    @configuration[:fixtures_path]
-  end
-
-  def self.json_path
-    @configuration[:json_path]
+   generator.write!
   end
 end
