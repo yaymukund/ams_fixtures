@@ -4,7 +4,7 @@ require 'ams_fixtures/generator'
 require 'ams_fixtures/engine'
 
 module AmsFixtures
-  def generate(options, &block)
+  def self.generate(options={}, &block)
    generator = Generator.new(options)
 
    ActiveRecord::Base.transaction do

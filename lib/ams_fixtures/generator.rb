@@ -1,13 +1,13 @@
 require 'ams_fixtures/fixture'
 
-module AmsFixtures::Generator
+class AmsFixtures::Generator
   def initialize(options)
     @fixtures = []
 
     @options = {
       namespace: options[:namespace] || 'FIXTURES',
       fixture_path: options[:fixture_path] ||
-                    File.join('spec', 'javascripts', 'fixtures', 'fixtures.js')
+                    File.join('spec', 'javascripts', 'assets', 'fixtures.js')
     }
   end
 
