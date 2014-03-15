@@ -61,18 +61,14 @@ class AmsFixtures::Fixture
   def make(name, options={})
     record = Fabricate(name, options)
     @records[name.to_sym] = record
-
-    resource = serialize_object(record)
-    @payloads << [name.to_sym, resource]
+    @payloads << [name, record]
   end
 
   def make_times(i, name, options={})
     records = Fabricate.times(i, name, options)
     plural_name = name.to_s.pluralize.to_sym
     @records[plural_name] = records
-
-    resources = serialize_object(records)
-    @payloads << [name, {name.to_s => resources}]
+    @payloads << [name, records]
   end
 
   def write_to_file!
@@ -87,7 +83,15 @@ class AmsFixtures::Fixture
   end
 
   def as_json
-    @payloads
+    @payloads.map do |name, record|
+      resource = serialize_object(record)
+
+      if record.is_a?(Array)
+        [name, {name.to_s => resource}]
+      else
+        [name, resource]
+      end
+    end
   end
 
   private

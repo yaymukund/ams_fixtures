@@ -50,6 +50,7 @@ RSpec.configure do |c|
 
     class UserSerializer < ActiveModel::Serializer
       attributes :name, :gender, :status, :mood
+      has_one :dog, embed: :id
     end
 
     class DogSerializer < ActiveModel::Serializer

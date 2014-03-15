@@ -34,14 +34,14 @@ describe 'a fixture with one user and their dog' do
     it 'returns the correct user payload' do
       payload = payloads.find { |p| p.first == :user }[1]
 
-      expect(payload).to match({
+      expect(payload).to match(
         'user' => a_hash_including(
           name: 'Oscar',
           gender: 'other',
           status: 'single',
           mood: 'pleased'
         )
-      })
+      )
     end
 
     it 'returns the correct dog payload' do
@@ -51,6 +51,16 @@ describe 'a fixture with one user and their dog' do
         'dog' => a_hash_including(
           name: 'Fido',
           user: an_instance_of(User)
+        )
+      )
+    end
+
+    it 'sets user.dog even though dog was defined later' do
+      payload = payloads.find { |p| p.first == :user }[1]
+
+      expect(payload).to match(
+        'user' => a_hash_including(
+          'dog_id' => an_instance_of(Fixnum)
         )
       )
     end
