@@ -48,7 +48,7 @@ var loadFixture = function(name) {
 describe('a playlist', function() {
   beforeEach(function() {
     App.reset();
-    loadFixture(playlist_fixtures);
+    loadFixture('playlist_fixtures');
   });
 
   it('loads fixtures correctly', function() {
